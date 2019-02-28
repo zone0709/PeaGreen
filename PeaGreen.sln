@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCore", "DataCore\DataCo
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LocalDB", "LocalDB\LocalDB.sqlproj", "{97AF318D-7AF4-449C-B527-F66B7F27AC65}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doitsu.Fandom.DbManager", "..\..\Doitsu.Service-master\Doitsu.Fandom.DbManager\Doitsu.Fandom.DbManager.csproj", "{9B6B5FE7-7657-497B-8946-C8FEA74F2EA5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doitsu.Service.Core", "Doitsu.Service.Core\Doitsu.Service.Core.csproj", "{23ADC462-DCC7-44EF-AAA4-40B45FB3D61E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,14 +29,6 @@ Global
 		{97AF318D-7AF4-449C-B527-F66B7F27AC65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97AF318D-7AF4-449C-B527-F66B7F27AC65}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97AF318D-7AF4-449C-B527-F66B7F27AC65}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{9B6B5FE7-7657-497B-8946-C8FEA74F2EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B6B5FE7-7657-497B-8946-C8FEA74F2EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B6B5FE7-7657-497B-8946-C8FEA74F2EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B6B5FE7-7657-497B-8946-C8FEA74F2EA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23ADC462-DCC7-44EF-AAA4-40B45FB3D61E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23ADC462-DCC7-44EF-AAA4-40B45FB3D61E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23ADC462-DCC7-44EF-AAA4-40B45FB3D61E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23ADC462-DCC7-44EF-AAA4-40B45FB3D61E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
