@@ -104,7 +104,7 @@ namespace PeaGreen.Controllers
             return result;
         }
         [HttpGet("")]
-        public ActionResult Get()
+        public ActionResult Get([FromQuery]AttendanceQueryRequest request)
         {
 
             try
@@ -118,7 +118,40 @@ namespace PeaGreen.Controllers
                 //}
                 #endregion
 
-                var data = attendanceService.Get();
+                var data = attendanceService.Get(request);
+                response = BaseResponse<dynamic>.Get(true, ConstantManager.SUCCESS, data, ResultEnum.Success);
+
+            }
+            catch (ApiException e)
+            {
+                result.StatusCode = e.StatusCode;
+                response = BaseResponse<dynamic>.Get(e.Success, e.ErrorMessage, null, e.ErrorStatus);
+                result = new JsonResult(response);
+            }
+            catch (Exception e)
+            {
+                result.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response = BaseResponse<dynamic>.Get(false, ConstantManager.Fail("Attendance : ") + e.ToString(), null, ResultEnum.InternalError);
+            }
+            result = new JsonResult(response);
+            return result;
+        }
+        [HttpGet("status")]
+        public ActionResult GetStatus([FromQuery]AttendanceQueryRequest request)
+        {
+
+            try
+            {
+                #region check model
+                //if (!ModelState.IsValid)
+                //{
+                //    var modelState = ModelState.FirstOrDefault();
+                //    var error = modelState.Value.Errors.FirstOrDefault().ErrorMessage;
+                //    throw ApiException.Get(false, error, ResultEnum.ModelError, HttpStatusCode.BadRequest);
+                //}
+                #endregion
+
+                var data = attendanceService.GetStatus(request);
                 response = BaseResponse<dynamic>.Get(true, ConstantManager.SUCCESS, data, ResultEnum.Success);
 
             }

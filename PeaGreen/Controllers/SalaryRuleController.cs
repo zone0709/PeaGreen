@@ -26,9 +26,9 @@ namespace PeaGreen.Controllers
             return Ok();
         }
         [HttpGet("")]
-        public ActionResult Get()
+        public ActionResult Get([FromQuery]SalaryQueryRequest request)
         {
-            var result = salaryruleService.GetSalaryRule();
+            var result = salaryruleService.GetSalaryRule(request);
             return Ok(result);
         }
     }

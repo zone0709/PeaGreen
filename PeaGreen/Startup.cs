@@ -21,6 +21,8 @@ using DataCore;
 using DataCore.Models.ViewModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SkyConnect.API.Identities;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Web.Http.Description;
 
 namespace PeaGreen
 {
@@ -79,6 +81,7 @@ namespace PeaGreen
                     });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                //c.DocumentFilter<ApplyDocumentVendorExtensions>();
                 c.IncludeXmlComments(xmlPath);
 
             });
@@ -120,5 +123,101 @@ namespace PeaGreen
             // create DB 
             //dbContext.Database.EnsureCreated();
         }
+        //public class ApplyDocumentVendorExtensions : IDocumentFilter
+        //{
+        //    #region old
+        //    //public void Apply(SwaggerDocument swaggerDoc, SchemaRegistry s, IApiExplorer a)
+        //    //{
+        //    //    if (swaggerDoc != null)
+        //    //    {
+        //    //        foreach (var path in swaggerDoc.Paths)
+        //    //        {
+        //    //            if (path.Value.Get != null && path.Value.Get.Parameters != null)
+        //    //            {
+
+        //    //                var parameters = path.Value.Get.Parameters;
+        //    //                foreach (var item in parameters)
+        //    //                {
+        //    //                    var index = item.Name.IndexOf(".");
+        //    //                    item.Name = item.Name.Substring(index + 1);
+        //    //                    //var list = item.name.Split('.');
+        //    //                    //item.name = list[1];
+        //    //                }
+        //    //                //if (parameters.Count == 3 && parameters[0].name.StartsWith("emp"))
+        //    //                //{
+        //    //                //    path.Value.post.parameters = EmployeeBodyParam;
+        //    //                //}
+        //    //            }
+        //    //            if (path.Value.Delete != null && path.Value.Delete.Parameters != null)
+        //    //            {
+        //    //                var parameters = path.Value.Delete.Parameters;
+
+        //    //                foreach (var item in parameters)
+        //    //                {
+        //    //                    if (item.In.Contains("query"))
+        //    //                    {
+
+        //    //                        var index = item.Name.IndexOf(".");
+        //    //                        if (index != -1)
+        //    //                        {
+        //    //                            item.Name = item.Name.Substring(index + 1);
+        //    //                            item.Required = true;
+        //    //                        }
+
+        //    //                    }
+        //    //                }
+        //    //            }
+
+        //    //        }
+        //    //    }
+        //    //}
+        //    #endregion
+
+        //    public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
+        //    {
+        //        if (swaggerDoc != null)
+        //        {
+        //            foreach (var path in swaggerDoc.Paths)
+        //            {
+        //                if (path.Value.Get != null && path.Value.Get.Parameters != null)
+        //                {
+
+        //                    var parameters = path.Value.Get.Parameters;
+        //                    foreach (var item in parameters)
+        //                    {
+        //                        var index = item.Name.IndexOf(".");
+        //                        item.Name = item.Name.Substring(index + 1);
+        //                        //var list = item.name.Split('.');
+        //                        //item.name = list[1];
+        //                    }
+        //                    //if (parameters.Count == 3 && parameters[0].name.StartsWith("emp"))
+        //                    //{
+        //                    //    path.Value.post.parameters = EmployeeBodyParam;
+        //                    //}
+        //                }
+        //                if (path.Value.Delete != null && path.Value.Delete.Parameters != null)
+        //                {
+        //                    var parameters = path.Value.Delete.Parameters;
+
+        //                    foreach (var item in parameters)
+        //                    {
+        //                        if (item.In.Contains("query"))
+        //                        {
+
+        //                            var index = item.Name.IndexOf(".");
+        //                            if (index != -1)
+        //                            {
+        //                                item.Name = item.Name.Substring(index + 1);
+        //                                item.Required = true;
+        //                            }
+
+        //                        }
+        //                    }
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

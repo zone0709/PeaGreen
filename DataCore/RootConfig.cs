@@ -230,7 +230,9 @@ namespace DataCore
                 cfg.CreateMap<AttendanceBasic, Attendance>();
                 cfg.CreateMap<Attendance, AttendanceBasic>();
                 cfg.CreateMap<AttentdenceRequest, Attendance>();
+                cfg.CreateMap<Attendance, AttentdenceRequest>();
                 cfg.CreateMap<Attendance, AttendanceResponse>();
+                cfg.CreateMap<Attendance, AttendanceStatusResponse>();
                 #endregion
 
                 #region ShiftRegister

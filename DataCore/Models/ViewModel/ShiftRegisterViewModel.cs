@@ -46,7 +46,9 @@ namespace DataCore.Models.ViewModel
         public TimeSpan EndTimeVM { get; set; }
         [JsonProperty("end_date")]
         public DateTime EndDate { get; set; }
-        [JsonProperty("time_frame_id")]
+        [JsonProperty("time_frame_name")]
+        public string TimeFrameName { get; set; }
+        [JsonIgnore]
         public int? TimeframeId { get; set; }
         [JsonProperty("status")]
         public string StatusName { get; set; }

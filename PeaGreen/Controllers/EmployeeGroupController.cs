@@ -10,11 +10,13 @@ using DataCore.Models.Utilities;
 using DataCore.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SkyConnect.API.Identities;
 
 namespace PeaGreen.Controllers
 {
     [Route("api/employee_group")]
     [ApiController]
+    [BlockCustom]
     public class EmployeeGroupController : ControllerBase, IEmployeeGroupController
     {
         readonly IEmployeeGroupService employeeGroupService;

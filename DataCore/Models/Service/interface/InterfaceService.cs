@@ -136,7 +136,7 @@ namespace DataCore.Models.Service
 
     public interface ISalaryRuleService : IBaseService<SalaryRule, SalaryRuleBasic>
     {
-        List<SalaryRuleResponse> GetSalaryRule();
+        List<SalaryRuleResponse> GetSalaryRule(SalaryQueryRequest request);
         void CreateSalaryRule(SalaryRuleBasic request);
     }
 
@@ -168,9 +168,10 @@ namespace DataCore.Models.Service
 
     public interface IAttendanceService : IBaseService<Attendance, AttendanceBasic>
     {
-        List<AttendanceResponse> Get();
+        List<AttendanceResponse> Get(AttendanceQueryRequest request);
         void Add(List<AttentdenceRequest> requests);
         void Accept(AttentdenceAcceptRequest request);
+        List<AttendanceStatusResponse> GetStatus(AttendanceQueryRequest request);
     }
 
     #endregion

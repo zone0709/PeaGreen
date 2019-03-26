@@ -117,7 +117,7 @@ namespace PeaGreen.Controllers
 
     public interface ISalaryRuleController
     {
-        ActionResult Get();
+        ActionResult Get(SalaryQueryRequest request);
         ActionResult Create(SalaryRuleBasic request);
     }
 
@@ -157,9 +157,10 @@ namespace PeaGreen.Controllers
     #region Attendance
     public interface IAttendanceController
     {
-        ActionResult Get();
+        ActionResult Get(AttendanceQueryRequest request);
         ActionResult Add(List<AttentdenceRequest> requests);
         ActionResult Accept(AttentdenceAcceptRequest request);
+        ActionResult GetStatus([FromQuery]AttendanceQueryRequest request);
 
     }
     #endregion

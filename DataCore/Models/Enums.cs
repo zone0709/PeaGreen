@@ -144,6 +144,8 @@ namespace DataCore.Models
         NotActive = 7,
         AttributeWrong = 8,
         RoleNotSupport = 9,
+        AuthorizationNotFound = 10,
+        NotAcceptable = 11,
     }
 
     public enum WorkingShiftTypeEnum

@@ -13,6 +13,7 @@ namespace System
         public const string MES_REQUEST_DENY = "Không có quyền thực hiện yêu cầu này";
         public const string MES_NOT_ACTIVE = "Tài khoản không hiệu lực";
         public const string MES_ROLE_WRONG = "Attribute block is wrong";
+        public const string MES_AUTHORIZATION_NOT_FOUND = "Authorization not found !";
         public static string Fail(string e)
         {
             return e + FAIL;

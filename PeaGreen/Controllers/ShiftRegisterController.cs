@@ -79,7 +79,8 @@ namespace PeaGreen.Controllers
                 #endregion
 
                 var data = shiftRegisterService.Get();
-                response = BaseResponse<dynamic>.Get(false, ConstantManager.SUCCESS, data, ResultEnum.Success);
+                var groupby = data.GroupBy(p => p.EmpName, p => p, (key, shift) => new { Name = key, Shift = shift.ToList() });
+                response = BaseResponse<dynamic>.Get(false, ConstantManager.SUCCESS, groupby, ResultEnum.Success);
 
             }
             catch (ApiException e)

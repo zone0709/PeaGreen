@@ -73,12 +73,16 @@ namespace DataCore.Models.Service
                     {
                         throw ApiException.Get(false, ConstantManager.NotFound("Employee "), ResultEnum.EmpNotFound, HttpStatusCode.NotFound);
                     }
-                    var entity = item.ToEntity();
+                    var entity = Mapper.Map<AttentdenceRequest, Attendance>(item);
                     for (int i = 0; i < item.Dates.Count; i++)
                     {
                         entity.ShiftMax = item.Dates[i].GetStartOfDate().Add(item.ShiftMaxTime[i]);
                         entity.ShiftMin = item.Dates[i].GetStartOfDate().Add(item.ShiftMaxTime[i]);
                         entity.ExpandTime = new TimeSpan();
+                        entity.CheckInExpandTime = new TimeSpan(1, 0, 0);
+                        entity.CheckOutExpandTime = new TimeSpan(1, 0, 0);
+                        entity.ComeLateExpandTime = new TimeSpan(1, 0, 0);
+                        entity.LeaveEarlyExpandTime = new TimeSpan(1, 0, 0);
                         entity.ProcessingStatus = (int)ProcessingStatusAttendenceEnum.Assign;
                         var timeFrameId = item.TimeFramId[i];
                         var tf = timeFrameService.FindById(timeFrameId);
@@ -110,9 +114,30 @@ namespace DataCore.Models.Service
 
         }
 
-        public List<AttendanceResponse> Get()
+        public List<AttendanceResponse> Get(AttendanceQueryRequest request)
         {
-            return GetAsNoTracking(p => p.Active == true).ProjectTo<AttendanceResponse>(Mapper.ConfigurationProvider).ToList();
+            var from = DateTime.Parse(request.FromDate).GetStartOfDate();
+            var to = DateTime.Parse(request.ToDate).GetEndOfDate();
+            return GetAsNoTracking(p => p.Active == true
+            && (p.ShiftMin >= from && p.ShiftMax <= to)
+            && (request.EmpId == null || p.EmployeeId == request.EmpId))
+            .ProjectTo<AttendanceResponse>(Mapper.ConfigurationProvider).ToList();
         }
+
+        public List<AttendanceStatusResponse> GetStatus(AttendanceQueryRequest request)
+        {
+            var from = DateTime.Parse(request.FromDate).GetStartOfDate();
+            var to = DateTime.Parse(request.ToDate).GetEndOfDate();
+            return GetAsNoTracking(p => p.Active == true
+           && (p.ShiftMin >= from && p.ShiftMax <= to)
+           && (request.EmpId == null || p.EmployeeId == request.EmpId))
+             .Select(p => new AttendanceStatusResponse()
+             {
+                 Date = p.ShiftMax.Date,
+                 // status  Assign false, UpdatedByAuto true,
+                 Status = p.Status == 0 ? false : true
+             }).ToList();
+        }
+
     }
 }

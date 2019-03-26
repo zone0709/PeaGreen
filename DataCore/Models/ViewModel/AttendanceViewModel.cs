@@ -1,9 +1,13 @@
 ﻿using DataCore.Models.Entities;
+using DataCore.Models.Utilities;
 using Doitsu.Service.Core;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Web.Http.ModelBinding;
 
 namespace DataCore.Models.ViewModel
 {
@@ -78,41 +82,33 @@ namespace DataCore.Models.ViewModel
     }
     public class AttendanceResponse : BaseViewModel<Attendance>
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
+        [JsonProperty("check_min")]
         public DateTime? CheckMin { get; set; }
+        [JsonProperty("check_max")]
         public DateTime? CheckMax { get; set; }
+        [JsonProperty("total_hour")]
         public TimeSpan? TotalWorkTime { get; set; }
+        [JsonProperty("status")]
         public int? Status { get; set; }
+        [JsonProperty("shift_min")]
         public DateTime ShiftMin { get; set; }
+        [JsonProperty("shift_max")]
         public DateTime ShiftMax { get; set; }
-        public TimeSpan ExpandTime { get; set; }
-        public string UpdatePerson { get; set; }
-        public int? ProcessingStatus { get; set; }
-        public string Note { get; set; }
-        public bool Active { get; set; }
-        public int StoreId { get; set; }
-        public TimeSpan? BreakTime { get; set; }
-        public int TimeFramId { get; set; }
-        public DateTime? RequestedCheckOut { get; set; }
-        public DateTime? RequestedCheckIn { get; set; }
-        public int? IsRequested { get; set; }
-        public string ApprovePerson { get; set; }
-        public string NoteRequest { get; set; }
-        public DateTime? LastCheckBeforeShift { get; set; }
-        public DateTime? FirstCheckAfterShift { get; set; }
-        public bool? IsOverTime { get; set; }
-        public int? InMode { get; set; }
-        public int? OutMode { get; set; }
-        public int? BreakCount { get; set; }
-        public TimeSpan? CheckInExpandTime { get; set; }
-        public TimeSpan? CheckOutExpandTime { get; set; }
-        public TimeSpan? ComeLateExpandTime { get; set; }
-        public TimeSpan? LeaveEarlyExpandTime { get; set; }
-        public int? BrandId { get; set; }
-
-        public virtual Employee Employee { get; set; }
-        public virtual Store Store { get; set; }
-        public virtual TimeFrame TimeFram { get; set; }
     }
+    public class AttendanceStatusResponse 
+    {
+        public DateTime Date { get; set; }
+        public bool Status { get; set; }
+    }
+    //[ModelBinder(typeof(SkyModelBinder))]
+    public class AttendanceQueryRequest
+    {
+        [FromQuery(Name ="to_date")]
+        public string ToDate { get; set; }
+        [FromQuery(Name = "from_date")]
+        public string FromDate { get; set; }
+        [FromQuery(Name = "emp_id")]
+        public int? EmpId { get; set; } 
+    }
+
 }

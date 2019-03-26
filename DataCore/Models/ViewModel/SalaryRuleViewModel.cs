@@ -1,5 +1,6 @@
 ﻿using DataCore.Models.Entities;
 using Doitsu.Service.Core;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace DataCore.Models.ViewModel
         public double? RateValue { get; set; }
         [JsonIgnore]
         public bool? IsActive { get; set; }
+    }
+    public class SalaryQueryRequest : BaseViewModel<SalaryRule>
+    {
+        [FromQuery(Name ="group_id")]
+        public int? GroupId { get; set; }
     }
     public class SalaryRuleResponse : BaseViewModel<SalaryRule>
     {

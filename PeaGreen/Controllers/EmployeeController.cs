@@ -21,7 +21,7 @@ namespace PeaGreen.Controllers
     
     public class EmployeeController : ControllerBase, IEmployeeController
     {
-        IEmployeeService employeeService;
+        static  IEmployeeService employeeService;
         //IEmployeeDetailService employeeDetailService;
         readonly HttpResponseMessage httpResponseMessage = new HttpResponseMessage()
         {
@@ -35,7 +35,7 @@ namespace PeaGreen.Controllers
 
         public EmployeeController(IEmployeeService employeeService/*, IEmployeeDetailService employeeDetailService*/)
         {
-            this.employeeService = employeeService;
+            EmployeeController.employeeService = employeeService;
             //this.employeeDetailService = employeeDetailService;
         }
 
@@ -74,7 +74,7 @@ namespace PeaGreen.Controllers
         //}
 
         [HttpGet("")]
-        [BlockAction(block = "ActiveUser",except = "Administrator")]
+        //[BlockEmployee(Block = "ActiveUser",Except = "Administrator")]
         public ActionResult Get([FromQuery(Name ="id")]int? EmployeeId)
         {
 

@@ -13,15 +13,17 @@ namespace DataCore.Models.Service
     public class ShiftRegisterService : BaseService<ShiftRegister, ShiftRegisterBasic>, IShiftRegisterService
     {
         readonly IMapper mapper;
-        public ShiftRegisterService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        ITimeFrameService timeFrameService;
+        public ShiftRegisterService(ITimeFrameService timeFrameService ,IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
             this.mapper = mapper;
+            this.timeFrameService = timeFrameService;
         }
 
 
         public List<ShiftRegisterResponse> Get()
         {
-            return GetAsNoTracking(p => p.Active == true)
+            var result = GetAsNoTracking(p => p.Active == true)
                   .Select(a => new ShiftRegisterResponse(a, mapper)
                   {
                       EmpName = a.Employee.Name,
@@ -31,6 +33,11 @@ namespace DataCore.Models.Service
                       EndDate = a.EndTime.Date,
                       StatusName = ((ShiftRegisterEnum)a.Status).DisplayName()
                   }).ToList();
+            foreach (var item in result)
+            {
+                item.TimeFrameName = timeFrameService.FindById(item.TimeframeId).Name;
+            }
+            return result;
         }
 
         public void Add(ShiftRegisterBasic requset)

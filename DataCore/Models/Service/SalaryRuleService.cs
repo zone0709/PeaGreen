@@ -23,9 +23,10 @@ namespace DataCore.Models.Service
             Create(request);
         }
 
-        public List<SalaryRuleResponse> GetSalaryRule()
+        public List<SalaryRuleResponse> GetSalaryRule(SalaryQueryRequest request)
         {
-            var entity = GetAsNoTracking(p => p.Active == true);
+            var entity = GetAsNoTracking(p => p.Active == true && 
+            (request.GroupId == null ||  p.SalaryRuleGroupMapping.Any(a => a.SalaryRuleGroupId == request.GroupId)));
             var result = entity.ProjectTo<SalaryRuleResponse>(Mapper.ConfigurationProvider).ToList();
             return result;
         }
