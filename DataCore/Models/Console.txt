@@ -1,1 +1,2 @@
 ﻿Scaffold-DbContext "Server=localhost;Database=Pea_dev;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models/Entities -Force
+Scaffold-DbContext "Server=localhost;Database=Reso_Pea;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models/Entities -Force

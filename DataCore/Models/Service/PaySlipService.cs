@@ -4,35 +4,37 @@ using DataCore.Models.ViewModel;
 using Doitsu.Service.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataCore.Models.Service
 {
-    public interface IPaySlipService : IBaseService<PaySlip, PaySlipBasic>
-    {
-        void AddEmp(PaySlipEmp model);
-        void AddGroupEmp(PaySlipGroupEmp model);
-        void DeleteEmp(PaySlipEmp model);
-    }
+
     public class PaySlipService : BaseService<PaySlip, PaySlipBasic>, IPaySlipService
     {
-        IEmployeeGroupMappingService empGroupMappingService;
-        public PaySlipService(IEmployeeGroupMappingService empGroupMappingService, IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        IEmployeeService empService;
+        public PaySlipService(IEmployeeService empService, IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            this.empGroupMappingService = empGroupMappingService;
+            this.empService = empService;
         }
 
-        public void AddEmp(PaySlipEmp model)
+        public int Add(PaySlip entity)
+        {
+            entity.Active = true;
+            var result = Create(entity);
+            return result.Id;
+        }
+
+        public void AddListEmp(PaySlipEmp model)
         {
             foreach (var item in model.EmpId)
             {
-                var basicvm = new PaySlipBasic()
+                var basicvm = new PaySlip()
                 {
                     EmployeeId = item,
                     PayrollPeriodId = model.Id,
-                    IsActive = true
                 };
-                Create(basicvm);
+                Add(basicvm);
             }
         }
 
@@ -40,15 +42,22 @@ namespace DataCore.Models.Service
         {
             var payslip = new PaySlipEmp();
 
-            payslip.EmpId = empGroupMappingService.GetListEmp(model.GroupId);
+            payslip.EmpId = empService.GetByGroupId(model.GroupId).Select(p => p.Id).ToList();
             payslip.Id = model.Id;
-            AddEmp(payslip);
-            
+            AddListEmp(payslip);
+
         }
 
         public void DeleteEmp(PaySlipEmp model)
         {
-            
+
+        }
+
+        public List<int> GetByEmpId(int empId)
+        {
+            var entity = GetActiveAsNoTracking(p => p.EmployeeId == empId);
+            var result = entity.Select(a => a.PayrollPeriodId.Value).ToList();
+            return result;
         }
     }
 }

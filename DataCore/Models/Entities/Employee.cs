@@ -7,36 +7,50 @@ namespace DataCore.Models.Entities
     {
         public Employee()
         {
+            AspNetUsers = new HashSet<AspNetUsers>();
             Attendance = new HashSet<Attendance>();
-            AttendanceTmp = new HashSet<AttendanceTmp>();
+            CheckFinger = new HashSet<CheckFinger>();
             EmployeeAttributeMapping = new HashSet<EmployeeAttributeMapping>();
-            EmployeeGroupMapping = new HashSet<EmployeeGroupMapping>();
-            EmployeeJobMapping = new HashSet<EmployeeJobMapping>();
-            EmployeeWorkingShiftAutoMapping = new HashSet<EmployeeWorkingShiftAutoMapping>();
-            EmployeeWorkingShiftRegitser = new HashSet<EmployeeWorkingShiftRegitser>();
+            EmployeeFingers = new HashSet<EmployeeFingers>();
+            EmployeeInStore = new HashSet<EmployeeInStore>();
             PaySlip = new HashSet<PaySlip>();
-            TimeSummary = new HashSet<TimeSummary>();
+            ShiftRegister = new HashSet<ShiftRegister>();
         }
 
         public int Id { get; set; }
-        public string Code { get; set; }
-        public string EmployeeName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string Name { get; set; }
+        public int? Role { get; set; }
+        public string EmpEnrollNumber { get; set; }
+        public int MainStoreId { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public int SalaryLevelId { get; set; }
-        public string Pin { get; set; }
-        public bool IsActive { get; set; }
+        public bool Active { get; set; }
+        public int BrandId { get; set; }
+        public decimal? Salary { get; set; }
+        public int Status { get; set; }
+        public DateTime? DateStartWork { get; set; }
+        public string EmployeeCode { get; set; }
+        public string EmployeeRegency { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public int? EmployeeSex { get; set; }
+        public string PersonalCardId { get; set; }
+        public DateTime? DatePersonalCard { get; set; }
+        public string PlaceOfPersonalCard { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string MainAddress { get; set; }
+        public string EmployeeHometown { get; set; }
+        public string EmployeePlaceBorn { get; set; }
+        public int? EmployeeGroupId { get; set; }
 
-        public virtual SalaryLevel SalaryLevel { get; set; }
+        public virtual EmployeeGroup EmployeeGroup { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
         public virtual ICollection<Attendance> Attendance { get; set; }
-        public virtual ICollection<AttendanceTmp> AttendanceTmp { get; set; }
+        public virtual ICollection<CheckFinger> CheckFinger { get; set; }
         public virtual ICollection<EmployeeAttributeMapping> EmployeeAttributeMapping { get; set; }
-        public virtual ICollection<EmployeeGroupMapping> EmployeeGroupMapping { get; set; }
-        public virtual ICollection<EmployeeJobMapping> EmployeeJobMapping { get; set; }
-        public virtual ICollection<EmployeeWorkingShiftAutoMapping> EmployeeWorkingShiftAutoMapping { get; set; }
-        public virtual ICollection<EmployeeWorkingShiftRegitser> EmployeeWorkingShiftRegitser { get; set; }
+        public virtual ICollection<EmployeeFingers> EmployeeFingers { get; set; }
+        public virtual ICollection<EmployeeInStore> EmployeeInStore { get; set; }
         public virtual ICollection<PaySlip> PaySlip { get; set; }
-        public virtual ICollection<TimeSummary> TimeSummary { get; set; }
+        public virtual ICollection<ShiftRegister> ShiftRegister { get; set; }
     }
 }

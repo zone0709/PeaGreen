@@ -7,19 +7,21 @@ namespace DataCore.Models.Entities
     {
         public PaySlip()
         {
-            PaySlipAttributeMapping = new HashSet<PaySlipAttributeMapping>();
             PaySlipItem = new HashSet<PaySlipItem>();
+            PayslipAttributeMapping = new HashSet<PayslipAttributeMapping>();
         }
 
         public int Id { get; set; }
         public int? PayrollPeriodId { get; set; }
-        public int EmployeeId { get; set; }
-        public double? NetPay { get; set; }
-        public bool? IsActive { get; set; }
+        public int? EmployeeId { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+        public double? FinalPaid { get; set; }
+        public bool Active { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual PayrollPeriod PayrollPeriod { get; set; }
-        public virtual ICollection<PaySlipAttributeMapping> PaySlipAttributeMapping { get; set; }
         public virtual ICollection<PaySlipItem> PaySlipItem { get; set; }
+        public virtual ICollection<PayslipAttributeMapping> PayslipAttributeMapping { get; set; }
     }
 }

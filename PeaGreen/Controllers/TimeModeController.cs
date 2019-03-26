@@ -2,29 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataCore.Models.Service;
 using DataCore.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PeaGreen.Controllers
 {
-    public interface ITimeModeController
-    {
-        ActionResult<TimeModeBasic> Get();
-        ActionResult Create(TimeModeBasic request);
-        ActionResult Update(TimeModeBasic request);
-        ActionResult DeActive(int id);
-        ActionResult UpdateTime(TimeModeTimeRequest request);
-    }
-    [Route("api/[controller]")]
+    
+    [Route("api/time_mode")]
     [ApiController]
     public class TimeModeController : ControllerBase, ITimeModeController
     {
-        [HttpPost,Route("")]
+        ITimeModeService timeModeService;
+        public TimeModeController(ITimeModeService timeModeService)
+        {
+            this.timeModeService = timeModeService;
+        }
+        [HttpPost, Route("")]
         public ActionResult Create(TimeModeBasic request)
         {
-            Ok();
-            throw new NotImplementedException();
+            timeModeService.CreateTimeMode(request);
+            return Ok();
         }
 
         [HttpDelete, Route("")]
@@ -35,10 +34,9 @@ namespace PeaGreen.Controllers
         }
 
         [HttpGet, Route("")]
-        public ActionResult<TimeModeBasic> Get()
+        public ActionResult<List<TimeModeBasic>> Get()
         {
-            Ok(new TimeModeBasic());
-            throw new NotImplementedException();
+           return Ok(timeModeService.GetTimeModes());
         }
 
         [HttpPut, Route("")]

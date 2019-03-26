@@ -10,10 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataCore.Models.Service
 {
-    public interface IEmployeeDetailService : IBaseService<Employee, EmployeeDetail>
-    {
-        Task<EmployeeDetail> GetDetailById(int id);
-    }
+    
     public class EmployeeDetailService : BaseService<Employee, EmployeeDetail>, IEmployeeDetailService
     {
         readonly IEmployeeJobMappingService EmployeeJobMappingService;
@@ -25,7 +22,7 @@ namespace DataCore.Models.Service
         }
 
         public async Task<EmployeeDetail> GetDetailById(int id)
-        {
+        { 
             var EmpD = await FirstOrDefaultActiveAsync(e => e.Id == id && e.IsActive == true);
             var ListId = EmployeeJobMappingService.GetByEmpId(EmpD.Id);
             EmpD.RoleName = EmployeeJobService.GetRoleNameById(ListId);

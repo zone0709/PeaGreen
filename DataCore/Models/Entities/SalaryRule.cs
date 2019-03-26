@@ -11,14 +11,16 @@ namespace DataCore.Models.Entities
         }
 
         public int Id { get; set; }
-        public int? TimeModeId { get; set; }
         public string Name { get; set; }
-        public double? DurationMin { get; set; }
-        public double? DurationMax { get; set; }
-        public double? FixValue { get; set; }
-        public double? RateValue { get; set; }
-        public bool? IsActive { get; set; }
+        public int? TimeModeRuleId { get; set; }
+        public double MinTimeDuration { get; set; }
+        public double MaxTimeDuration { get; set; }
+        public double? Value { get; set; }
+        public double? Rate { get; set; }
+        public int BrandId { get; set; }
+        public bool Active { get; set; }
 
+        public virtual TimeModeRule TimeModeRule { get; set; }
         public virtual ICollection<SalaryRuleGroupMapping> SalaryRuleGroupMapping { get; set; }
     }
 }

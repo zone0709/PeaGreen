@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-//using DataCore.Models.Entities;
+using DataCore.Models.Entities;
 using DataCore.Models.Indentities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +18,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using DataCore;
+using DataCore.Models.ViewModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using SkyConnect.API.Identities;
+
 namespace PeaGreen
 {
     public class Startup
@@ -34,6 +38,14 @@ namespace PeaGreen
         {
 
             RootConfig.Entry(services, Configuration);
+            services.Configure<UserConfiguration>(Configuration.GetSection("UserConfiguration"));
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.Audience = "http://dev.authorize.reso.vn";
+            //        options.ClaimsIssuer = "http://dev.authorize.reso.vn";
+            //        options.Authority = "issuers";
+            //    });
             //var DBConnect = this.Configuration.GetConnectionString("DBContext");
             //var IdentityConnect = this.Configuration.GetConnectionString("IdentityContext");
             //services.AddDbContext<ApplicationDbContext>(o =>
@@ -53,11 +65,18 @@ namespace PeaGreen
             //    .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddMvc(options =>
+            {
+                // add an instance of the filter, like we used to do it
+                //options.Filters.Add(new BlockCustomAttribute());
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Pea API", Version = "v1" });
-
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                { "Bearer", Enumerable.Empty<string>() },
+                    });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
@@ -71,7 +90,7 @@ namespace PeaGreen
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseStaticFiles();
-            
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 

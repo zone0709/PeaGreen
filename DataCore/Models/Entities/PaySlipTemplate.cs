@@ -7,15 +7,16 @@ namespace DataCore.Models.Entities
     {
         public PaySlipTemplate()
         {
-            PaySlipTemplateMapping = new HashSet<PaySlipTemplateMapping>();
             PayrollPeriod = new HashSet<PayrollPeriod>();
+            TemplateDetailMapping = new HashSet<TemplateDetailMapping>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool? IsActive { get; set; }
+        public bool Active { get; set; }
+        public int BrandId { get; set; }
 
-        public virtual ICollection<PaySlipTemplateMapping> PaySlipTemplateMapping { get; set; }
         public virtual ICollection<PayrollPeriod> PayrollPeriod { get; set; }
+        public virtual ICollection<TemplateDetailMapping> TemplateDetailMapping { get; set; }
     }
 }

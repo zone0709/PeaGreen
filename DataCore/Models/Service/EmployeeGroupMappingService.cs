@@ -10,10 +10,7 @@ using System.Text;
 
 namespace DataCore.Models.Service
 {
-    public interface IEmployeeGroupMappingService : IBaseService<EmployeeGroupMapping, EmpGroupMappingModel>
-    {
-        List<int> GetListEmp(int id);
-    }
+    
     public class EmployeeGroupMappingService : BaseService<EmployeeGroupMapping, EmpGroupMappingModel>, IEmployeeGroupMappingService
     {
         public EmployeeGroupMappingService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)

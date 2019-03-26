@@ -9,19 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PeaGreen.Controllers
 {
-    public interface IPaySlipController
-    {
-        ActionResult<List<PaySlipEmpBasic>> Get();
+    
 
-        ActionResult AddEmp(PaySlipEmp request);
-        ActionResult AddEmpGroup(PaySlipGroupEmp request);
-
-        ActionResult Update(PaySlipBasic request);
-
-        ActionResult DeActive(int id);
-    }
-
-    [Route("api/[controller]")]
+    [Route("api/payslip")]
     [ApiController]
     public class PaySlipController : ControllerBase, IPaySlipController
     {
@@ -33,7 +23,7 @@ namespace PeaGreen.Controllers
         [HttpPost("")]
         public ActionResult AddEmp(PaySlipEmp request)
         {
-            payslipService.AddEmp(request);
+            payslipService.AddListEmp(request);
             return Ok();
         }
         [HttpPost("group")]

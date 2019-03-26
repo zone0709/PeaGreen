@@ -53,6 +53,11 @@ namespace Doitsu.Service.Core
             var entity = selfDbSet.Find(id);
             return CreateVM(entity);
         }
+        public TEntity FindEById(int id)
+        {
+            var entity = selfDbSet.Find(id);
+            return entity;
+        }
         public async Task<TViewModel> FindByIdAsync<TKey>(TKey id)
         {
             var entity = await selfDbSet.FindAsync(id);
@@ -72,6 +77,10 @@ namespace Doitsu.Service.Core
         {
             return GetAsNoTracking(predicate).ProjectTo<TViewModel>(this.Mapper.ConfigurationProvider);
         }
+        public IQueryable<TEntity> GetE(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAsNoTracking(predicate);
+        }
         public IQueryable<TViewModel> GetActive(Expression<Func<TEntity, bool>> predicate)
         {
             return GetActiveAsNoTracking(predicate).ProjectTo<TViewModel>(this.Mapper.ConfigurationProvider);
@@ -83,6 +92,17 @@ namespace Doitsu.Service.Core
             var e = GetAllAsNoTracking().FirstOrDefault();
             return CreateVM(e);
         }
+        public TEntity FirstOrDefaultE()
+        {
+            var e = GetAllAsNoTracking().FirstOrDefault();
+            return e;
+        }
+        public TEntity FirstOrDefaultE(Expression<Func<TEntity, bool>> predicate)
+        {
+            var e = GetAsNoTracking(predicate).FirstOrDefault();
+            return e;
+        }
+
         public TViewModel FirstOrDefaultActive()
         {
             var e = GetAllActiveAsNoTracking().FirstOrDefault();
@@ -133,6 +153,13 @@ namespace Doitsu.Service.Core
             dbContext.SaveChanges();
             return CreateVM(e);
         }
+        public TEntity Create(TEntity entity)
+        {
+            selfDbSet.Add(entity);
+            dbContext.SaveChanges();
+            return entity;
+        }
+
         public async Task<TViewModel> CreateAsync(TViewModel viewModel)
         {
             var e = CreateEntity(viewModel);
@@ -180,6 +207,12 @@ namespace Doitsu.Service.Core
             selfDbSet.Update(entity);
             dbContext.SaveChanges();
             return CreateVM(entity);
+        }
+        public TEntity Update(TEntity entity)
+        {
+            selfDbSet.Update(entity);
+            dbContext.SaveChanges();
+            return entity;
         }
 
         public async Task<TViewModel> UpdateAsync(TViewModel viewModel)
@@ -253,7 +286,7 @@ namespace Doitsu.Service.Core
         #region Mapping Utils
         // Area to solve View Model map to Entity
         protected TAlternativeEntity VMToE<TAlternativeViewModel, TAlternativeEntity>(TAlternativeViewModel model)
-            where TAlternativeEntity: class, new()
+            where TAlternativeEntity : class, new()
         {
             var e = new TAlternativeEntity();
             mapper.Map(model, e);
@@ -297,6 +330,9 @@ namespace Doitsu.Service.Core
         {
             mapper.Map(e, model);
         }
+
+
+
         #endregion
     }
 
@@ -328,6 +364,11 @@ namespace Doitsu.Service.Core
             var entity = selfDbSet.Find(id);
             return CreateVM(entity);
         }
+        public TEntity FindEById(int id)
+        {
+            var entity = selfDbSet.Find(id);
+            return entity;
+        }
         public async Task<TViewModel> FindByIdAsync(int id)
         {
             var entity = await selfDbSet.FindAsync(id);
@@ -357,6 +398,10 @@ namespace Doitsu.Service.Core
         {
             return GetAsNoTracking(predicate).ProjectTo<TViewModel>(this.Mapper.ConfigurationProvider);
         }
+        public IQueryable<TEntity> GetE(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAsNoTracking(predicate);
+        }
         public IQueryable<TViewModel> GetActive(Expression<Func<TEntity, bool>> predicate)
         {
             return GetActiveAsNoTracking(predicate).ProjectTo<TViewModel>(this.Mapper.ConfigurationProvider);
@@ -367,6 +412,16 @@ namespace Doitsu.Service.Core
         {
             var e = GetAllAsNoTracking().FirstOrDefault();
             return CreateVM(e);
+        }
+        public TEntity FirstOrDefaultE()
+        {
+            var e = GetAllAsNoTracking().FirstOrDefault();
+            return e;
+        }
+        public TEntity FirstOrDefaultE(Expression<Func<TEntity, bool>> predicate)
+        {
+            var e = GetAsNoTracking(predicate).FirstOrDefault();
+            return e;
         }
         public TViewModel FirstOrDefaultActive()
         {
@@ -418,6 +473,13 @@ namespace Doitsu.Service.Core
             dbContext.SaveChanges();
             return CreateVM(e);
         }
+        public TEntity Create(TEntity entity)
+        {
+            
+            selfDbSet.Add(entity);
+            dbContext.SaveChanges();
+            return entity;
+        }
         public async Task<TViewModel> CreateAsync(TViewModel viewModel)
         {
             var e = CreateEntity(viewModel);
@@ -465,6 +527,12 @@ namespace Doitsu.Service.Core
             selfDbSet.Update(entity);
             dbContext.SaveChanges();
             return CreateVM(entity);
+        }
+        public TEntity Update(TEntity entity)
+        {
+            selfDbSet.Update(entity);
+            dbContext.SaveChanges();
+            return entity;
         }
 
         public async Task<TViewModel> UpdateAsync(TViewModel viewModel)
@@ -521,6 +589,10 @@ namespace Doitsu.Service.Core
         protected IQueryable<TEntity> GetAsNoTracking(Expression<Func<TEntity, bool>> predicate)
         {
             return selfDbSet.AsNoTracking().Where(predicate);
+        }
+        protected IQueryable<TEntity> GetAsNoTracking()
+        {
+            return selfDbSet.AsNoTracking();
         }
         protected IQueryable<TEntity> GetActiveAsNoTracking(Expression<Func<TEntity, bool>> predicate)
         {
