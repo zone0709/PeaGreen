@@ -42,7 +42,7 @@ namespace PeaGreen.Controllers
             this.userService = userService;
         }
         [HttpPost,Route("login")]
-        public async  Task<ActionResult<UserResponse>> Login(UserLoginRequest request)
+        public async  Task<ActionResult> Login(UserLoginRequest request)
         {
             try
             {

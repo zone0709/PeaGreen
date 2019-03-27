@@ -83,7 +83,7 @@ namespace PeaGreen.Controllers
 
     public interface IUserController
     {
-        Task<ActionResult<UserResponse>> Login(UserLoginRequest request);
+        Task<ActionResult> Login(UserLoginRequest request);
         ActionResult Register(UserBasic request);
         ActionResult ResetPassword(string email);
 

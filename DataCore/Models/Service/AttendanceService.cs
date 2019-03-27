@@ -74,6 +74,7 @@ namespace DataCore.Models.Service
                         throw ApiException.Get(false, ConstantManager.NotFound("Employee "), ResultEnum.EmpNotFound, HttpStatusCode.NotFound);
                     }
                     var entity = Mapper.Map<AttentdenceRequest, Attendance>(item);
+                    //item.ToEntity();
                     for (int i = 0; i < item.Dates.Count; i++)
                     {
                         entity.ShiftMax = item.Dates[i].GetStartOfDate().Add(item.ShiftMaxTime[i]);
@@ -135,7 +136,7 @@ namespace DataCore.Models.Service
              {
                  Date = p.ShiftMax.Date,
                  // status  Assign false, UpdatedByAuto true,
-                 Status = p.Status == 0 ? false : true
+                 Status = (p.CheckMin != null && p.CheckMax != null) ? true : false
              }).ToList();
         }
 

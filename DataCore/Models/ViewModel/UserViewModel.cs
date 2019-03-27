@@ -47,6 +47,8 @@ namespace DataCore.Models.ViewModel
         public EmployeeBasic Employee { get; set; }
         [JsonProperty("role")]
         public Array Role { get; set; }
+        [JsonProperty("membership")]
+        public ResoLoyalty.Client.Models.Membership Membership { get; set; }
 
     }
     public class UserConfiguration
@@ -56,5 +58,6 @@ namespace DataCore.Models.ViewModel
         public string AUDIENCE { get; set; }
         public string ISSUER { get; set; }
         public string SECRETKEY { get; set; }
+        public string Loyalty { get; set; }
     }
 }

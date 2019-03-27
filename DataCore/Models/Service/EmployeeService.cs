@@ -35,11 +35,11 @@ namespace DataCore.Models.Service
             return result;
         }
 
-        public bool Add(UserBasic model)
+        public bool Add(UserBasic model,string number)
         {
             var entity = new Employee();
             Mapper.Map(model, entity, typeof(UserBasic), typeof(Employee));
-            entity.EmpEnrollNumber = Utils.GetCurrentDateTime().Ticks.ToString();
+            entity.EmpEnrollNumber = number;
             entity.Active = true;
             entity.Status = (int)EmployeeStatusEnum.Active;
             entity = Create(entity);

@@ -39,7 +39,7 @@ namespace DataCore.Models.Service
         EmployeeDetail Get(int id);
         void UpdatePatch(EmployeeUpdatePatch request);
         IQueryable<Employee> GetByGroupId(int id);
-        bool Add(UserBasic model);
+        bool Add(UserBasic model,string number);
     }
     #endregion
 

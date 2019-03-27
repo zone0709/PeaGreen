@@ -2,6 +2,8 @@
 using DataCore.Models.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ResoLoyalty.Client.Models;
+using ResoLoyalty.Client.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,6 +27,8 @@ namespace DataCore.Models.Service
         }
         public async Task Register(string brandToken, UserBasic model)
         {
+
+
             using (var client = new HttpClient())
             {
                 //ServicePointManager.ServerCertificateValidationCallback +=
@@ -47,7 +51,22 @@ namespace DataCore.Models.Service
                     //var responseObj = await response.Content.ReadAsAsync<JObject>();
                     //var data =  responseObj.SelectToken("data");
                     //var email = data.SelectToken("email").ToString();
-                    employeeService.Add(model);
+                    var empEnrollNumber = Utils.GetCurrentDateTime().Ticks.ToString();
+
+                    employeeService.Add(model,empEnrollNumber);
+                    var loyaltyResponse = RootConfig.LoyaltyClient.MembershipsApi.Create(new CreateMembership()
+                    {
+                        IncludeAccounts = true,
+                        Active = true,
+                        BrandCode = "PASSIO",
+                        Code = empEnrollNumber,
+                        CreatedBy = "PeaSystem",
+                        EmpCode = empEnrollNumber,
+                        IsSample = false,
+                        Status = 1,
+                        MembershipTypeId = 3
+                    }).Result;
+                    var result = loyaltyResponse.Content.ReadAsAsync<BaseResponse<LoyaltyEvent>>().Result;
                 }
 
             }
@@ -82,6 +101,18 @@ namespace DataCore.Models.Service
                         result.Token = token;
                         result.Employee = emp;
                         result.Role = role;
+                        var loyaltyResponse = RootConfig.LoyaltyClient.MembershipsApi.Get(new ResoLoyalty.Client.Models.Request.MembershipRequest()
+                        {
+                            of_emp_code = emp.EmpEnrollNumber,
+                            includes = new List<string>()
+                            {
+                                MembershipRequest.Basic,
+                                MembershipRequest.CreditAcc
+                            }
+
+                        }).Result;
+                        var membership = loyaltyResponse.Content.ReadAsAsync<BaseResponse<IEnumerable<Membership>>>().Result.Data.FirstOrDefault();
+                        result.Membership = membership;
                         //var tokenJWT = Utils.DecodeJwtToken(token);
                         //tokenJWT.Claims.Where(p => p.Type )
                         //var email = data.SelectToken("email").ToString();

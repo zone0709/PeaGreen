@@ -30,6 +30,18 @@
     <Reference Include="Doitsu.Utils">
       <HintPath>..\Doitsu.Service.Core\bin\Debug\netcoreapp2.2\Doitsu.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="Reso.Interface">
+      <HintPath>..\lib\Reso.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ResoCRM.Client">
+      <HintPath>..\lib\ResoCRM.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ResoLoyalty.Client">
+      <HintPath>..\lib\ResoLoyalty.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="TNT.Core.WebApi">
+      <HintPath>..\lib\TNT.Core.WebApi.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

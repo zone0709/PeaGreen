@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ResoLoyalty.Client;
 
 namespace DataCore
 {
@@ -31,6 +32,7 @@ namespace DataCore
     public static class RootConfig
     {
 
+        public static LoyaltyClient LoyaltyClient { get; private set; }
 
         public static void Entry(IServiceCollection services, IConfiguration configuration)
         {
@@ -39,6 +41,10 @@ namespace DataCore
             // Config db context basic
             services.AddDbContext<Reso_PeaContext>(options =>
                             options.UseSqlServer(configuration.GetConnectionString("DBContext")));
+            LoyaltyClient = new LoyaltyClient(new LoyaltyClientInfo()
+            {
+                BaseAddress = configuration.GetSection("UserConfiguration:Loyalty").Value
+            });
             //// Config identity db config
             //services.AddDbContext<IdentityFandomContext>(options =>
             //                options.UseSqlServer(configuration.GetConnectionString("Doitsu.Identity.DBConStr")));
